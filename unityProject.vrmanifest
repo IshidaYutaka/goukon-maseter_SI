@@ -1,0 +1,16 @@
+{
+  "source": "Unity",
+  "applications": [
+    {
+      "app_key": "application.generated.unity.gokontraining.exe",
+      "launch_type": "url",
+      "url": "steam://launch/",
+      "action_manifest_path": "C:\\Users\\kikuc\\Desktop\\gokon-master-2018\\actions.json",
+      "strings": {
+        "en_us": {
+          "name": "GokonTraining [Testing]"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+SMILExtract -C /home/yutaka/opensmile-2.3.0.2/config/IS12_speaker_trait.conf -I data1.wav -O player.arff -class 0
