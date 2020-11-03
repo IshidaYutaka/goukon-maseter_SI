@@ -1,6 +1,8 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
+using UnityEngine.UI;
 
 // 1. WAVWriter: https://github.com/TyounanMOTI/WAVWriter
 //    Releasesから.unitypackageをダウンロードしてインポートしてください
@@ -9,11 +11,15 @@ using UnityEngine.SceneManagement;
 public class MicrophoneRecorder : MonoBehaviour {
     AudioClip clip;
     int head = 0;
+    float time;
+    bool startRecord;
+    public Text guide;
+    public Text count;
     const int samplingFrequency = 16000;
     const int lengthSeconds = 1;
     float[] processBuffer = new float[256];
     float[] microphoneBuffer = new float[lengthSeconds * samplingFrequency];
-    String availableMic = "mic (Realtek High Definition Audio)";
+    String available = "ライン (AG06/AG03)";
 
     WAVWriter writer;
     CsPy cspy;
@@ -21,17 +27,44 @@ public class MicrophoneRecorder : MonoBehaviour {
     void Start() {
         foreach (var device in Microphone.devices)
         {
-            Debug.Log("Name: " + device);
+            Debug.Log(device);
         }
+        Debug.Log(Microphone.devices[0]);
+        string folderPath = "Assets/WAV";
+        string filePath = "Assets/WAV/result.wav";
+
+        if (!Directory.Exists(folderPath))
+        {
+            Debug.Log(folderPath + "は存在しません。");
+        }
+        if (!File.Exists(filePath))
+        {
+            Debug.Log(filePath + "は存在しません。");
+        }
+        else {
+            File.Delete(filePath);
+        }
+        time = 0;
     }
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("space key pushed");
+
             writer = new WAVWriter("Assets/WAV/result.wav", 1, 16000);
             clip = Microphone.Start(Microphone.devices[0], true, lengthSeconds, samplingFrequency);
+            Debug.Log(Microphone.devices[0]);
+            startRecord = true;
         }
+        if (startRecord) {
+            int t = (int)time;
+            time += Time.deltaTime;//毎フレームの時間を加算.
+            count.text = t.ToString();   
+            guide.text = "スペースキー離して録音終了";
+        }
+        
+
 
         var position = Microphone.GetPosition(null);
         if (position < 0 || head == position) {
@@ -58,15 +91,16 @@ public class MicrophoneRecorder : MonoBehaviour {
         }
         if (Input.GetKeyUp(KeyCode.Space))
         {
+            startRecord = false;
             Debug.Log("space key pushed2");
             writer.Close();
             cspy = GetComponent<CsPy>();
             //cspy.Python();
             enabled = false;
             //SshConect.connect = true;
-            //SceneManager.LoadScene("SI3_women");
+            SceneManager.LoadScene("SI3_women");
             //でばっぐ時ここコメントアウト
-            SceneManager.LoadScene("loading");
+            //SceneManager.LoadScene(3);
         }
     }
 

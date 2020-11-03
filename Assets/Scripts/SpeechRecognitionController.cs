@@ -8,11 +8,7 @@ public class SpeechRecognitionController : MonoBehaviour
     // Use this for initialization
 
     private VoiceDetectManager voiceManager;
-    private void Awake()
-    {
-        voiceManager = GameObject.Find("SpeechRecordTest").GetComponent<VoiceDetectManager>();
-    }
-
+   
     void Start()
     {
     }

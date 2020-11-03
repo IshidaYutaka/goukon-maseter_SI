@@ -128,17 +128,19 @@ public class ResultData : MonoBehaviour
         c_2 = c_2 * 7 + 50;
         c_3 = c_3 * 7 + 50;
         Cluster.text =
-            "社交的、飽きっぽい、好奇心旺盛な女性群:\n" + c_0+ "\n\n" +
-            "人見知り、飽きっぽい、繊細な女性群：\n" + c_1 + "\n\n" +
-            "かなり社交的、面倒見がいい、自己抑制に優れた、冷静、好奇心旺盛な女性：\n" + c_2 + "\n\n" +
-            "社交的で、繊細な女性：\n" + c_3 + "\n\n"
+            "社交的、飽きっぽい、好奇心旺盛な女性群:\n" + (int)c_0 +"点" + "\n\n" +
+            "人見知り、飽きっぽい、繊細な女性群：\n" +(int)c_1 + "点"+ "\n\n" +
+            "かなり社交的、面倒見がいい、自己抑制に優れた、冷静、好奇心旺盛な女性：\n" + (int)c_2 + "点" + "\n\n" +
+            "社交的で、繊細な女性：\n" + (int)c_3 +"点"+"\n\n"
             ;
+        
         ResultScore.text = tmp;
         ResultSubNumber.text =
-            "基本周波数の安定性：\n" + Stars(f0) + "\n" + "声が震えないように意識しましょう\n\n" +
-            "スペクトル包絡：\n" + Stars(mfcc) + "\n" + "口の形や喉の奥を意識しましょう\n\n" +
+            "基本周波数の安定性：\n" + Stars(f0) + "\n" + "声の高さを安定させましょう\n\n" +
+            "スペクトル包絡：\n" + Stars(mfcc) + "\n" + "抑揚を意識して発生しましょう\n\n" +
             "声の大きさ・明瞭性：\n" + Stars(audSpec) + "\n" + "はっきり発声しましょう\n\n";
-       
+        Debug.Log(f0 +""+ mfcc +""+ audSpec);
+
     }
 
     private float Score(string[] ls,int num) {
@@ -157,9 +159,17 @@ public class ResultData : MonoBehaviour
             star = "★";
 
         }
-        else if (num >= 0 && num < 1)
+        else if (num >= 0 && num < 0.5)
+        {
+            star = "★★";
+        }
+        else if (num >= 0.5 && num < 0.7)
         {
             star = "★★★";
+        }
+        else if (num >= 0.7 && num < 1)
+        {
+            star = "★★★★";
         }
         else
         {

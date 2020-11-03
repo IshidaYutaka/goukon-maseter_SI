@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class PlayAgain : MonoBehaviour
 {
     public void onClick() {
-        SceneManager.LoadScene("SI0_start");
+        Debug.Log("クリック");
+        SceneManager.LoadScene(0);
     }
 }
